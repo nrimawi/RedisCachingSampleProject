@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RedisCachingSampleProject.Migrations
 {
-    public partial class ini : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

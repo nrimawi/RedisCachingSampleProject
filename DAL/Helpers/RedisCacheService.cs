@@ -22,7 +22,7 @@ namespace DAL.Helpers
         {
             var db = _connectionMultiplexer.GetDatabase();
 
-            await db.StringSetAsync(key, value);
+            await db.StringSetAsync(key, value,System.TimeSpan.FromHours(1));
         }
     }
 }

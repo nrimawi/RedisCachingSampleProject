@@ -14,9 +14,10 @@ namespace Services.Repositories
 {
     public interface IStudentRepository
     {
-        Student GetStudentByUId(string uid);
-        Student InserStudent(Student student);
-        List<Student> GetAllStudents();
+        StudentData GetStudentByUId(string uid);
+        StudentData InserStudent(StudentData student);
+        List<StudentData> GetAllStudents();
+        public StudentData GetHighestStudentGPA();
     }
 
 
@@ -34,20 +35,20 @@ namespace Services.Repositories
             _cashServices = cashServices;
             _logger = logger;
         }
-        public List<Student> GetAllStudents()
+        public List<StudentData> GetAllStudents()
         {
             var students = _appDbContext.Students.ToList();
-            return _mapper.Map<List<Student>>(students);
+            return _mapper.Map<List<StudentData>>(students);
         }
 
-        public Student GetStudentByUId(string uid)
+        public StudentData GetStudentByUId(string uid)
         {
             var studentFromCache = _cashServices.GetCachValueAsync(uid.ToString());
             if (studentFromCache.Result != null)
             {
-                StudentData? studentData = JsonSerializer.Deserialize<StudentData>(studentFromCache.Result);
+                Student? studentData = JsonSerializer.Deserialize<Student>(studentFromCache.Result);
                 _logger.LogInformation("Student " + uid + " Retrived from REDIS");
-                return _mapper.Map<Student>(studentData);
+                return _mapper.Map<StudentData>(studentData);
             }
 
             var student = _appDbContext.Students.Where(s => s.UniversityID == uid).FirstOrDefault();
@@ -55,22 +56,39 @@ namespace Services.Repositories
                 _cashServices.SetCachValueAsync(student.UniversityID, JsonSerializer.Serialize(student));
             _logger.LogInformation("Student " + uid + " Retrived from DB");
 
-            return _mapper.Map<Student>(student); ;
+            return _mapper.Map<StudentData>(student); ;
         }
 
-        public Student InserStudent(Student student)
+        public StudentData InserStudent(StudentData student)
         {
-            //int _UniversityID = 1170000;
 
-            //for (int i = 0; i < 100000; i++)
-            //{
-            //    _appDbContext.Students.Add(new StudentData() { UniversityID = _UniversityID++.ToString(), GPA = new Random().Next(65, 98) + new Random().NextDouble(), Name = "TestStudent" }); ;
-            //}
-            var studentData = _mapper.Map<StudentData>(student);
+            var studentData = _mapper.Map<Student>(student);
             _appDbContext.Students.Add(studentData);
             student.Id = studentData.Id;
             _appDbContext.SaveChanges();
             return student;
+        }
+
+        public StudentData GetHighestStudentGPA()
+        {
+
+            var studentFromCache = _cashServices.GetCachValueAsync("HighestGPA");
+            if (studentFromCache.Result != null)
+            {
+                Student? studentData = JsonSerializer.Deserialize<Student>(studentFromCache.Result);
+                _logger.LogInformation("Highest Student GPA  Retrived from REDIS");
+                return _mapper.Map<StudentData>(studentData);
+            }
+
+            var student = _appDbContext.Students.OrderByDescending(x => x.GPA).First();
+
+            //var maxValue = _appDbContext.Students.Max(s => s.GPA);
+            //var student = _appDbContext.Students.First(x => x.GPA == maxValue);
+
+            _cashServices.SetCachValueAsync("HighestGPA", JsonSerializer.Serialize(student));
+            _logger.LogInformation("Highest Student GPA  Retrived from DB");
+
+            return _mapper.Map<StudentData>(student); ;
         }
     }
 }

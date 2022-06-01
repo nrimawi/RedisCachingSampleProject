@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RedisCachingSampleProject.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/student")]
     [ApiController]
     public class StudentController : ControllerBase
     {
@@ -32,7 +32,7 @@ namespace RedisCachingSampleProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> getStudents()
+        public async Task<IActionResult> GetStudents()
         {
 
             var students = _studentRepository.GetAllStudents();
@@ -42,8 +42,20 @@ namespace RedisCachingSampleProject.Controllers
                 return BadRequest();
         }
 
+        [HttpGet("highestGrade")]
+        public async Task<IActionResult> GetStudentWithHighestGrade()
+        {
+
+            var students = _studentRepository.GetHighestStudentGPA();
+            if (students != null)
+                return Ok(students);
+            else
+                return BadRequest();
+        }
+
+
         [HttpPost]
-        public async Task<IActionResult> AddStudent([FromBody] Student request)
+        public async Task<IActionResult> AddStudent([FromBody] StudentData request)
         {
 
             var student = _studentRepository.InserStudent(request);

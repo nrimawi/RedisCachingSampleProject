@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace RedisCachingSampleProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220531004125_ini")]
-    partial class ini
+    [Migration("20220601095556_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace RedisCachingSampleProject.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Entiites.StudentData", b =>
+            modelBuilder.Entity("DAL.Entiites.Student", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

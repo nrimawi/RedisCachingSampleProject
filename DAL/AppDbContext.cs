@@ -6,7 +6,7 @@ namespace DAL
     public class AppDbContext : DbContext
     {
 
-        public DbSet<StudentData> Students { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

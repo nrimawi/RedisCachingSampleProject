@@ -19,7 +19,7 @@ namespace RedisCachingSampleProject.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Entiites.StudentData", b =>
+            modelBuilder.Entity("DAL.Entiites.Student", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
