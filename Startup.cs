@@ -38,7 +38,7 @@ namespace RedisCachingSampleProject
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLConnection")));
             services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis")));
-            services.AddSingleton<ICashServices, RedisCacheService>();
+            services.AddSingleton<ICasheServices, RedisCacheService>();
 
             services.AddScoped<IStudentRepository, StudentRepository>();
 

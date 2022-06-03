@@ -25,10 +25,10 @@ namespace Services.Repositories
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
-        private readonly ICashServices _cashServices;
+        private readonly ICasheServices _cashServices;
         private readonly ILogger _logger;
 
-        public StudentRepository(AppDbContext appDbContext, IMapper mapper, ICashServices cashServices, ILogger<StudentRepository> logger)
+        public StudentRepository(AppDbContext appDbContext, IMapper mapper, ICasheServices cashServices, ILogger<StudentRepository> logger)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;

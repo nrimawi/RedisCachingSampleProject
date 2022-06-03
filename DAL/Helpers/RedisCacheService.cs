@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Helpers
 {
-    public class RedisCacheService : ICashServices
+    public class RedisCacheService : ICasheServices
     {
 
         private readonly IConnectionMultiplexer _connectionMultiplexer;

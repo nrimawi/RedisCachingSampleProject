@@ -15,7 +15,7 @@ namespace RedisCachingSampleProject.Controllers
         private readonly IStudentRepository _studentRepository;
         private readonly ILogger _logger;
 
-        public StudentController(ICashServices cashServices, IStudentRepository studentRepository, ILogger<StudentController> logger)
+        public StudentController(ICasheServices cashServices, IStudentRepository studentRepository, ILogger<StudentController> logger)
         {
             _studentRepository = studentRepository;
             _logger = logger;

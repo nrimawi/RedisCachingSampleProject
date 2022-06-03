@@ -2,7 +2,7 @@
 
 namespace DAL.Helpers
 {
-    public interface ICashServices
+    public interface ICasheServices
     {
         public Task<string> GetCachValueAsync(string key);
         public Task SetCachValueAsync(string key, string value);
